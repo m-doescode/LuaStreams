@@ -198,6 +198,28 @@ function Stream:forEach( action )
 	end
 end
 
+function Stream:reduce( identity, accumulator)
+	local result = identity
+	for i, v in ipairs(self:collect()) do
+		result = accumulator(result, v)
+	end
+	return result
+end
+
+function Stream:reduce( accumulator )
+	local found = false
+	local result
+	for i, v in ipairs(self:collect()) do
+		if not found then
+			found = true
+			result = v
+		else
+			result = accumulator(result, v)
+		end
+	end
+	return result
+end
+
 local Streams = {}
 
 Streams.Stream = Stream
