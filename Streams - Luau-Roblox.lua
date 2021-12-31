@@ -113,6 +113,28 @@ function Stream.new(t : { any }) : Stream
 	return (setmetatable(self, Stream) :: any)
 end
 
+function Stream.values(t : { any }) : Stream
+	local newt = setmetatable({}, {__index = table})
+
+	for _, v in pairs(t) do
+		newt:insert(v)
+	end
+	
+	return Stream.new(newt)
+end
+
+function Stream.entrySet(t : { any }) : Stream
+	local newt = setmetatable({}, {__index = table})
+
+	for k, v in pairs(t) do
+		newt:insert({ key = k, value = v })
+	end
+	
+	return Stream.new(newt)
+end
+
+---
+
 function Stream:collect(): { any }
 	local t = self.table
 	for _, operation in pairs(self.operations) do

@@ -74,6 +74,13 @@ Stream.new(t)
 		print("Countdown: " .. num)
 	end)
 ```
+### Constructors
+`Stream.new( t : { any } )` - Creates a new stream based on the list t.
+
+`Stream.values( t : { any } )` - Gets the values from the dictionary t and creates a new Stream based on it.
+
+`Stream.entrySet( t : { any } )` - Converts the dictionary t into a list of entries that go `{ key = <key>, value = <value> }`.
+
 ### Chain functions
 `:filter( predicate : (any) -> boolean )` - Checks if the function returns true on each element. If it returns true, the element is kept, otherwise it is discarded.
 
