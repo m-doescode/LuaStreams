@@ -1,4 +1,5 @@
-# LuaStreams
+<p align="center"><img src="https://repository-images.githubusercontent.com/443419240/98d7db14-ff94-479e-864b-8bdfa66c100a"></p>
+<h1 align="center">LuaStreams</h1>
 
 LuaStreams brings the Java 8 Streams library to Lua or Luau (Roblox).
 
