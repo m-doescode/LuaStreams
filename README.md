@@ -23,9 +23,9 @@ local Stream = Streams.Stream
 local t = {1, 6, 2, 3, 8}
 
 local final = Stream.new(t)
-				:sorted()
-				:map(function(num) return math.pow(num, 2) end)
-				:collect()
+		:sorted()
+		:map(function(num) return math.pow(num, 2) end)
+		:collect()
 
 local randomNumber = math.random(1, #t)
 print(randomNumber .. " of list is: " .. squared[i]) 
@@ -38,7 +38,7 @@ Use the same steps as for [in lua projects](#in-lua-projects) but use the Luau f
 1. Download the latest Lua file at [Streams - Lua](https://github.com/m-doescode/LuaStreams/blob/master/Streams%20-%20Lua.lua)
 2. Rename it to "Streams"
 3. Put in your project
-4. Require it via ```require() ```.
+4. Require it via ```require(<file path>)```.
 
 ### In Roblox projects
 1. Download the latest Luau file at [Streams - Luau-Roblox](https://github.com/m-doescode/LuaStreams/blob/master/Streams%20-%20Luau-Roblox.lua)
