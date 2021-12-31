@@ -146,6 +146,16 @@ function Stream:map( mappingFunction )
 	return self
 end
 
+function Stream:sorted()
+	self.operations:insert(function(t)
+		local newt = setmetatable(shallowCopy(t), {__index = table})
+		table.sort(newt)
+		return newt	
+	end)
+
+	return self
+end
+
 function Stream:sorted( comparator )
 	self.operations:insert(function(t)
 		local newt = setmetatable(shallowCopy(t), {__index = table})
