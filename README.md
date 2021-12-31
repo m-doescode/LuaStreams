@@ -88,6 +88,10 @@ Stream.new(t)
 `:skip( n : number )` - Skips first n elements in the table and discards them.
 
 ### Tail functions (final functions)
-`:collect()` - Completes all the operations and converts the Stream into a table.
+`:collect() : { any }` - Completes all the operations and converts the Stream into a table.
 
 `:forEach( iterator : (any) -> nil )` - Iterates over the collected value of the Stream.
+
+`:reduce<T>( identity : T, accumulator : (T, T) -> T )` - Passes each element as the second argument into the accumulator, and the last result (return value) as the first argument. If there was no last result, it will pass identity.
+
+`:reduce<T>( accumulator : (T, T) -> T )` - Passes each element as the second argument into the accumulator, and the last result (return value) as the first argument. If there was no last result, the accumulator will not be called and result will be set to the first item in the table.
