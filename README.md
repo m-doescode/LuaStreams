@@ -1,5 +1,7 @@
 # LuaStreams
 
+(Icon designed by m-doescode using Lunacy created by [Icons8](https://icons8.com/))
+
 LuaStreams brings the Java 8 Streams library to Lua or Luau (Roblox).
 
 Streams are away to easily apply logic to a list without cluttering your code with many for-loops and if-statements.
