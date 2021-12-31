@@ -1,6 +1,7 @@
 -- ## LUASTREAMS ##
 -- Java 8 Streams in Luau
 -- by m-doescode
+-- Github: https://github.com/m-doescode/LuaStreams
 																																																--[[
 # Example #
 
