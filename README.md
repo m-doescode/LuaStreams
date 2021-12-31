@@ -1,4 +1,5 @@
-# LuaStreams
+<p align="center"><img src="https://github.com/m-doescode/LuaStreams/raw/master/docs/logo.png"></p>
+<h1 align="center">LuaStreams</h1>
 
 (Icon designed by m-doescode using Lunacy created by [Icons8](https://icons8.com/))
 
