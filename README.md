@@ -36,15 +36,10 @@ print(randomNumber .. " of list is: " .. squared[i])
 
 ## Importing
 ### In plain-Luau projects (non-Roblox)
-Use the same steps as for [in lua projects](#in-lua-projects) but use the Luau file at [Streams - Luau-Roblox](https://github.com/m-doescode/LuaStreams/blob/master/Streams%20-%20Luau-Roblox.lua)
-### In Lua projects
-1. Download the latest Lua file at [Streams - Lua](https://github.com/m-doescode/LuaStreams/blob/master/Streams%20-%20Lua.lua)
-2. Rename it to "Streams"
-3. Put in your project
-4. Require it via ```require(<file path>)```.
+Use the same steps as for [in lua projects](#in-lua-projects) but use the Luau file at [Streams.lua](https://github.com/m-doescode/LuaStreams/blob/master/Streams.lua)
 
 ### In Roblox projects
-1. Download the latest Luau file at [Streams - Luau-Roblox](https://github.com/m-doescode/LuaStreams/blob/master/Streams%20-%20Luau-Roblox.lua)
+1. Download the latest Luau file at [Streams.lua](https://github.com/m-doescode/LuaStreams/blob/master/Streams.lua)
 2. Rename it to "Streams"
 3. Put it in ServerScriptService
 4. Require it via ```require(game.ServerScriptService.Streams)```
