@@ -1,0 +1,7 @@
+# Version 2.0
+
+* Removed support for plain Lua as it was annoying to maintain. If you would like a plain Lua version, I'm happy to accept contributions.
+
+# Version 1.0
+
+(TBA)
