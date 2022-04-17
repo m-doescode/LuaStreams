@@ -98,17 +98,33 @@ function shallowCopy(original : { any }) : { any }
 	return copy
 end
 
+type Iterator = ({ any }, number) -> (number, any)
+
+function streampairs( view: { any } ): (Iterator, any, number)
+	local function iter(a: { any }, i: number): (number, any)
+		i = i + 1
+		local v = a[i]
+		if v then
+			return i, v
+		end
+	end
+
+	return iter, view, 0
+end
+
 -- Classes
 
 local Stream = {}
 Stream.__index = Stream
 type Stream = typeof(Stream)
 
+-- Constructors
+
 function Stream.new(t : { any }) : Stream
 	local self = {}
 
-	self.table = t
-	self.operations = setmetatable({}, {__index = table})
+	self.reference = t
+	self.tailoperation = function(i) return t[i] end
 
 	return (setmetatable(self, Stream) :: any)
 end
@@ -135,14 +151,6 @@ end
 
 ---
 
-function Stream:collect(): { any }
-	local t = self.table
-	for _, operation in pairs(self.operations) do
-		t = operation(t)
-	end
-	return t
-end
-
 function Stream:filter( predicate : (any) -> boolean ) : Stream
 	self.operations:insert(function(t)
 		local newt = setmetatable({}, {__index = table})
@@ -158,38 +166,56 @@ function Stream:filter( predicate : (any) -> boolean ) : Stream
 end
 
 function Stream:map( mappingFunction : (any) -> any ) : Stream
-	self.operations:insert(function(t)
-		local newt = setmetatable({}, {__index = table})
-		for i, v in ipairs(t) do
-			newt[i] = mappingFunction(v)
-		end
-		return newt
-	end)
+	local prev = self.tailoperation
+
+	self.tailoperation = function(i)
+		local v = prev(i)
+		if v == nil then return nil end
+		return mappingFunction(v)
+	end
 
 	return self
 end
 
+--TODO: Implement an actual sorting system instead of this stupid hack
 function Stream:sorted() : Stream
-	self.operations:insert(function(t)
-		local newt = setmetatable(shallowCopy(t), {__index = table})
-		table.sort(newt)
-		return newt	
-	end)
+	local prev = self.tailoperation
+
+	local tcache = nil
+
+	self.tailoperation = function(i)
+		if tcache == nil then
+			local t = {}
+			for i, v in function(_, i) i += 1 local v = self.tailoperation(i) if v then return i, v end end, nil, 0 do t[i] = v end
+			tcache = table.sort(t)
+		end
+
+		return tcache[i]
+	end
 
 	return self
 end
 
 type Comparator = (any, any) -> boolean
 
-function Stream:sorted( comparator : Comparator ) : Stream
-	self.operations:insert(function(t)
-		local newt = setmetatable(shallowCopy(t), {__index = table})
-		table.sort(newt, comparator)
-		return newt	
-	end)
+-- function Stream:sorted( comparator: Comparator ) : Stream
+-- 	local prev = self.tailoperation
 
-	return self
-end
+-- 	local tcache = nil
+
+-- 	self.operations:insert(function(i)
+-- 		if tcache == nil then
+-- 			local t = {}
+-- 			for i, v in function(_, i) i += 1 local v = self.tailoperation(i) if v then return i, v end end, nil, 0 do t[i] = v end
+-- 			tcache = table.sort(t, comparator)
+-- 		end
+
+-- 		return tcache[i]
+-- 	end)
+
+-- 	return self
+-- end
+
 
 function Stream:limit( maxSize : number ) : Stream
 	self.operations:insert(function(t)
@@ -217,13 +243,38 @@ end
 
 --
 
+function streamiter (a, i)
+	i = i + 1
+	local v = a[i]
+	print(a[i])
+	if v then
+		return i, v
+	end
+end
+
+function Stream:view(): { any }
+	return setmetatable({}, {
+		__index = function(t, i) return self.tailoperation(i) end,
+		__newindex = function(t, i, n) return self.tailsetoperation(i, n) end,
+		__next = streamiter
+	})
+end
+
+-- function Stream:collect(): { any }
+-- 	local t = self.table
+-- 	for _, operation in pairs(self.operations) do
+-- 		t = operation(t)
+-- 	end
+-- 	return t
+-- end
+
 function Stream:forEach( action : (any) -> nil )
 	for i, v in ipairs(self:collect()) do
 		action(v)
 	end
 end
 
-function Stream:reduce<T>( identity : T, accumulator : (T) -> T )
+function Stream:reduceIdentity<T>( identity : T, accumulator : (T) -> T )
 	local result : T = identity
 	for i, v in ipairs(self:collect()) do
 		result = accumulator(result, v)
@@ -248,5 +299,6 @@ end
 local Streams = {}
 
 Streams.Stream = Stream
+Streams.streampairs = streampairs
 
 return Streams
