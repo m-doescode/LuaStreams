@@ -265,14 +265,14 @@ function Stream:collect(): { any }
 end
 
 function Stream:forEach( action : (any) -> nil )
-	for i, v in ipairs(self:collect()) do
+	for i, v in streampairs(self:view()) do
 		action(v)
 	end
 end
 
 function Stream:reduceIdentity<T>( identity : T, accumulator : (T) -> T )
 	local result : T = identity
-	for i, v in ipairs(self:collect()) do
+	for i, v in streampairs(self:view()) do
 		result = accumulator(result, v)
 	end
 	return result
@@ -281,7 +281,7 @@ end
 function Stream:reduce<T>( accumulator : (T) -> T )
 	local found : boolean = false
 	local result : T
-	for i, v in ipairs(self:collect()) do
+	for i, v in streampairs(self:view()) do
 		if not found then
 			found = true
 			result = v
