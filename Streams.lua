@@ -251,10 +251,16 @@ function Stream:view(): { any }
 end
 
 function Stream:collect(): { any }
-	local t = self.table
-	for _, operation in pairs(self.operations) do
-		t = operation(t)
-	end
+	local t = {}
+
+	local i = 1
+	local v = nil
+	repeat
+		v = self.tailoperation(i)
+		t[i] = v
+		i += 1
+	until v == nil
+
 	return t
 end
 
