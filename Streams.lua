@@ -204,13 +204,15 @@ end
 
 
 function Stream:limit( maxSize : number ) : Stream
-	self.operations:insert(function(t)
-		local newt = setmetatable({}, {__index = table})
-		for i = 1, math.min(#t, maxSize) do
-			newt[i] = t[i]
+	local prev = self.tailoperation
+
+	self.tailoperation = function(i)
+		if i > maxSize then
+			return nil
+		else
+			return prev(i)
 		end
-		return newt
-	end)
+	end
 
 	return self
 end
