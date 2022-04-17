@@ -152,15 +152,27 @@ end
 ---
 
 function Stream:filter( predicate : (any) -> boolean ) : Stream
-	self.operations:insert(function(t)
-		local newt = setmetatable({}, {__index = table})
-		for k, v in ipairs(t) do
+	local prev = self.tailoperation
+
+	self.tailoperation = function(i)
+		local validi = 1
+		local j = 1
+		local v = prev(j)
+		while v ~= nil do
 			if predicate(v) then
-				newt[k] = v
+				validi += 1
 			end
+			
+			if validi == i then
+				return v
+			elseif validi > i then
+				return nil
+			end
+
+			j += 1
+			v = prev(i)
 		end
-		return newt
-	end)
+	end
 
 	return self
 end
