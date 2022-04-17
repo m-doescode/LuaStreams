@@ -177,8 +177,14 @@ function Stream:map( mappingFunction : (any) -> any ) : Stream
 	return self
 end
 
---TODO: Implement an actual sorting system instead of this stupid hack
 function Stream:sorted() : Stream
+	return self:sortedUsing(nil)
+end
+
+type Comparator = (any, any) -> boolean
+
+--TODO: Implement an actual sorting system instead of this stupid hack
+function Stream:sortedUsing( comparator: Comparator ) : Stream
 	local prev = self.tailoperation
 
 	local tcache = nil
@@ -187,7 +193,7 @@ function Stream:sorted() : Stream
 		if tcache == nil then
 			local t = {}
 			for i, v in function(_, i) i += 1 local v = self.tailoperation(i) if v then return i, v end end, nil, 0 do t[i] = v end
-			tcache = table.sort(t)
+			tcache = table.sort(t, comparator)
 		end
 
 		return tcache[i]
@@ -195,26 +201,6 @@ function Stream:sorted() : Stream
 
 	return self
 end
-
-type Comparator = (any, any) -> boolean
-
--- function Stream:sorted( comparator: Comparator ) : Stream
--- 	local prev = self.tailoperation
-
--- 	local tcache = nil
-
--- 	self.operations:insert(function(i)
--- 		if tcache == nil then
--- 			local t = {}
--- 			for i, v in function(_, i) i += 1 local v = self.tailoperation(i) if v then return i, v end end, nil, 0 do t[i] = v end
--- 			tcache = table.sort(t, comparator)
--- 		end
-
--- 		return tcache[i]
--- 	end)
-
--- 	return self
--- end
 
 
 function Stream:limit( maxSize : number ) : Stream
