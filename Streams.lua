@@ -192,7 +192,7 @@ function Stream:sortedUsing( comparator: Comparator ) : Stream
 	self.tailoperation = function(i)
 		if tcache == nil then
 			local t = {}
-			for i, v in function(_, i) i += 1 local v = self.tailoperation(i) if v then return i, v end end, nil, 0 do t[i] = v end
+			for i, v in function(_, i) i += 1 local v = prev(i) if v then return i, v end end, nil, 0 do t[i] = v end
 			tcache = table.sort(t, comparator)
 		end
 
