@@ -218,13 +218,11 @@ function Stream:limit( maxSize : number ) : Stream
 end
 
 function Stream:skip( n : number ) : Stream
-	self.operations:insert(function(t)
-		local newt = setmetatable(shallowCopy(t), {__index = table})
-		for i = 1, math.max(1, n) do
-			newt:remove(1)
-		end
-		return newt
-	end)
+	local prev = self.tailoperation
+
+	self.tailoperation = function(i)
+		return prev(i + n)
+	end
 
 	return self
 end
