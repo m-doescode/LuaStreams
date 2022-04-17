@@ -123,7 +123,7 @@ function Stream:filter( predicate : (any) -> boolean ) : Stream
 	local prev = self.tailoperation
 
 	self.tailoperation = function(i)
-		local validi = 1
+		local validi = 0
 		local j = 1
 		local v = prev(j)
 		while v ~= nil do
@@ -138,7 +138,7 @@ function Stream:filter( predicate : (any) -> boolean ) : Stream
 			end
 
 			j += 1
-			v = prev(i)
+			v = prev(j)
 		end
 	end
 
