@@ -103,7 +103,7 @@ function Stream.values(t : { any }) : Stream
 	for _, v in pairs(t) do
 		newt:insert(v)
 	end
-	
+
 	return Stream.new(newt)
 end
 
@@ -113,7 +113,7 @@ function Stream.entrySet(t : { any }) : Stream
 	for k, v in pairs(t) do
 		newt:insert({ key = k, value = v })
 	end
-	
+
 	return Stream.new(newt)
 end
 
@@ -130,7 +130,7 @@ function Stream:filter( predicate : (any) -> boolean ) : Stream
 			if predicate(v) then
 				validi += 1
 			end
-			
+
 			if validi == i then
 				return v
 			elseif validi > i then
