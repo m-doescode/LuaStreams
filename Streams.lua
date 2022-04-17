@@ -243,30 +243,20 @@ end
 
 --
 
-function streamiter (a, i)
-	i = i + 1
-	local v = a[i]
-	print(a[i])
-	if v then
-		return i, v
-	end
-end
-
 function Stream:view(): { any }
 	return setmetatable({}, {
 		__index = function(t, i) return self.tailoperation(i) end,
-		__newindex = function(t, i, n) return self.tailsetoperation(i, n) end,
-		__next = streamiter
+		__newindex = function(t, i, n) return self.tailsetoperation(i, n) end
 	})
 end
 
--- function Stream:collect(): { any }
--- 	local t = self.table
--- 	for _, operation in pairs(self.operations) do
--- 		t = operation(t)
--- 	end
--- 	return t
--- end
+function Stream:collect(): { any }
+	local t = self.table
+	for _, operation in pairs(self.operations) do
+		t = operation(t)
+	end
+	return t
+end
 
 function Stream:forEach( action : (any) -> nil )
 	for i, v in ipairs(self:collect()) do
