@@ -66,38 +66,6 @@ Stream:forEach( action : (any) -> nil ) -- Iterates over the table, passing the 
 
 -- Helper Funcs
 
-function doubleipairs(t)
-	local function iter(t, i)
-		i += 2
-		local a = t[i]
-		local b = t[i + 1]
-		if a and b then
-			return i, a, b
-		end
-	end
-	return iter, t, -1
-end
-
-function comparingipairs(t)
-	local function iter(t, i)
-		i += 1
-		local a = t[i]
-		local b = t[i + 1]
-		if a and b then
-			return i, a, b
-		end
-	end
-	return iter, t, 0
-end
-
-function shallowCopy(original : { any }) : { any }
-	local copy = {}
-	for key, value in pairs(original) do
-		copy[key] = value
-	end
-	return copy
-end
-
 type Iterator = ({ any }, number) -> (number, any)
 
 function streampairs( view: { any } ): (Iterator, any, number)
