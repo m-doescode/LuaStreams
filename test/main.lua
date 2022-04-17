@@ -28,7 +28,6 @@ local transformed = Stream.new(original)
             :filter(function(x) return x % 2 == 0 end)
             :collect()
 
-for k,v in pairs(transformed) do print(k, v) end
 assert(compareTables(model, transformed), "Filter test failed!")
 
 -- Sorted
