@@ -59,6 +59,18 @@ end
 
 ---
 
+function Stream:pairs()
+	local function iter(a: Stream, i: number): (number, any)
+		i = i + 1
+		local v = a.tailoperation(i)
+		if v then
+			return i, v
+		end
+	end
+
+	return iter, self, 0
+end
+
 function Stream:filter( predicate : (any) -> boolean ) : Stream
 	local prev = self.tailoperation
 
