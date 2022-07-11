@@ -94,6 +94,8 @@ Stream.new(t)
 
 `:forEach( iterator : (any) -> nil )` - Iterates over the collected value of the Stream.
 
+`:pairs()` - Returns an iterator. Works like `forEach` but in for loops.
+
 `:reduce<T>( identity : T, accumulator : (T, T) -> T )` - Passes each element as the second argument into the accumulator, and the last result (return value) as the first argument. If there was no last result, it will pass identity.
 
 `:reduce<T>( accumulator : (T, T) -> T )` - Passes each element as the second argument into the accumulator, and the last result (return value) as the first argument. If there was no last result, the accumulator will not be called and result will be set to the first item in the table.
