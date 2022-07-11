@@ -1,2 +1,3 @@
 require("main")
---require("view")
+require("view")
+require("othercalls")
