@@ -4,11 +4,17 @@
 -- Github: https://github.com/m-doescode/LuaStreams
 -------------------
 
+-- Classes
+
+local Stream = {}
+Stream.__index = Stream
+type Stream = typeof(Stream)
+
 -- Helper Funcs
 
 type Iterator = ({ any }, number) -> (number, any)
 
-function streampairs( view: { any } ): (Iterator, any, number)
+function viewpairs( view: { any } ): (Iterator, any, number)
 	local function iter(a: { any }, i: number): (number, any)
 		i = i + 1
 		local v = a[i]
@@ -19,12 +25,6 @@ function streampairs( view: { any } ): (Iterator, any, number)
 
 	return iter, view, 0
 end
-
--- Classes
-
-local Stream = {}
-Stream.__index = Stream
-type Stream = typeof(Stream)
 
 -- Constructors
 
