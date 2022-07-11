@@ -22,4 +22,22 @@ local transformed = Stream.new(original)
 
 print("ForEach test passed!")
 
+-- ReduceIdentity
+local original = {1, 2, 3, 4}
+local model = 12
+local transformed = Stream.new(original)
+            :reduceIdentity(2, function(a, b) return a + b end)
+
+assert(model == transformed, "ReduceIdentity test failed!")
+print("ReduceIdentity test passed!")
+
+-- Reduce
+local original = {1, 2, 3, 4}
+local model = 10
+local transformed = Stream.new(original)
+            :reduce(function(a, b) return a + b end)
+
+assert(model == transformed, "Reduce test failed!")
+print("Reduce test passed!")
+
 return {}
