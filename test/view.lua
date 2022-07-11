@@ -1,6 +1,6 @@
 local Streams = require('../Streams')
 local Stream = Streams.Stream
-local streampairs = Streams.streampairs
+local viewpairs = Streams.viewpairs
 
 local oldt = {1, 2, 3, 4}
 local t = Stream.new(oldt)
@@ -8,7 +8,7 @@ local t = Stream.new(oldt)
             --:sorted()
             :view()
 
-for i,v in streampairs(t) do
+for i,v in viewpairs(t) do
     print(i, v)
 end
 
