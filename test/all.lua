@@ -1,2 +1,2 @@
-require("main")
---require("view")
+--require("main")
+require("view")
