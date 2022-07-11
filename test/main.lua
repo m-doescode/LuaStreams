@@ -20,6 +20,7 @@ local transformed = Stream.new(original)
             :collect()
 
 assert(compareTables(model, transformed), "Map test failed!")
+print("Map test passed!")
 
 -- Filter
 local original = {1, 2, 3, 4}
@@ -29,6 +30,7 @@ local transformed = Stream.new(original)
             :collect()
 
 assert(compareTables(model, transformed), "Filter test failed!")
+print("Filter test passed!")
 
 -- Sorted
 local original = {4, 2, 3, 1}
@@ -38,6 +40,7 @@ local transformed = Stream.new(original)
             :collect()
 
 assert(compareTables(model, transformed), "Sorted test failed!")
+print("Sorted test passed!")
 
 -- Skip
 local original = {1, 2, 3, 4}
@@ -47,6 +50,7 @@ local transformed = Stream.new(original)
             :collect()
 
 assert(compareTables(model, transformed), "Skip test failed!")
+print("Skip test passed!")
 
 -- Limit
 local original = {1, 2, 3, 4}
@@ -56,5 +60,6 @@ local transformed = Stream.new(original)
             :collect()
 
 assert(compareTables(model, transformed), "Limit test failed!")
+print("Limit test passed!")
 
 return {}
